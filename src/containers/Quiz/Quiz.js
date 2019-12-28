@@ -7,6 +7,7 @@ class Quiz extends React.Component {
     super(props)
     this.state = {
       activeQuistion: 0,
+      answerState: null,
       quiz: [
         {
           question: 'Какого цвета небо?',
@@ -37,9 +38,34 @@ class Quiz extends React.Component {
   onAnswerClickHandler = (answerId) => {
     console.log('Answer Id:', answerId)
 
-    this.setState({
-      activeQuistion: this.state.activeQuistion + 1
-    })
+    const question = this.state.quiz[this.state.activeQuistion]
+    
+    if (question.rightAnswerId === answerId) {
+      this.setState({
+        answerState: {[answerId]: 'success'}
+      })
+
+      const timeout = window.setTimeout(() => {
+        if (this.isQuizFinished()) {
+          console.log('finished')
+        } else {
+          this.setState({
+            activeQuistion: this.state.activeQuistion + 1,
+            answerState: null
+          })
+        }
+        
+        window.clearTimeout(timeout)
+      }, 1000)
+    } else {
+      this.setState({
+        answerState: {[answerId]: 'error'}
+      })
+    }
+  }
+
+  isQuizFinished() {
+    return this.state.activeQuistion + 1 === this.state.quiz.length
   }
 
   render() {
@@ -53,6 +79,7 @@ class Quiz extends React.Component {
             onAnswerClick = {this.onAnswerClickHandler}
             quizLength={this.state.quiz.length}
             answerNumber={this.state.activeQuistion + 1}
+            state={this.state.answerState}
           />
         </div>
       </div>
