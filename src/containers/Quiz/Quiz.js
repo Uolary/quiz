@@ -92,6 +92,7 @@ class Quiz extends React.Component {
     this.setState({
       activeQuistion: 0,
       answerState: null,
+      activeH1: 'Ответьте на вопросы',
       isFinished: false,
       results: {}
     })
