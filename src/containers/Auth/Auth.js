@@ -133,7 +133,7 @@ class Auth extends React.Component {
               onClick={this.registerHandler}
               disabled={!this.state.isFormValid}
             >
-              Загеристрироваться
+              Зарегистрироваться
             </Button>
           </form>
         </div>
